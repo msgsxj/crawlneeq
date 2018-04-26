@@ -5,24 +5,20 @@ Created on Tue Apr 10 17:14:56 2018
 @author: msgsxj
 """
 
-from urllib import request
 import time
 import json
 import re
 import pandas as pd
-
+import requests
 
 def gethomepagedata(): # sbzs, sbcz, market = gethomepagedata()
     time_start=time.time()
     url_sbzs = 'http://www.neeq.com.cn/neeqController/getMinu.do?callback=jQuery18305096780566754533_1523369354341&_=1523370667670'
     url_sbcz = 'http://www.neeq.com.cn/neeqController/getSBCZ.do?callback=jQuery18305096780566754533_1523369354343'
     url_market = 'http://www.neeq.com.cn/nqxxController/getMarketData.do?callback=jQuery18307255220064667056_1523371119904'
-    html_sbzs = request.urlopen(url_sbzs).read()
-    html_sbcz = request.urlopen(url_sbcz).read()
-    html_market = request.urlopen(url_market).read()
-    sbzs = html_sbzs.decode('utf-8','ignore')
-    sbcz = html_sbcz.decode('utf-8','ignore')
-    market = html_market.decode('utf-8','ignore')
+    sbzs = requests.get(url_sbzs).text
+    sbcz = requests.get(url_sbcz).text
+    market = requests.get(url_market).text
     time_end=time.time()
     print('get home page data cost:',time_end - time_start,'s')
     return sbzs, sbcz, market
@@ -32,12 +28,9 @@ def getstockdata(): # zhang, die, cje = getstockdata()
     url_zhang = 'http://www.neeq.com.cn/nqhqController/nqhq.do?callback=jQuery18304718930715294276_1523372978803&page=0&type=Z&zqdm=&sortfield=hqzdf&sorttype=desc&xxfcbj=&keyword=&_=1523372983237'
     url_die = 'http://www.neeq.com.cn/nqhqController/nqhq.do?callback=jQuery18304718930715294276_1523372978803&page=0&type=Z&zqdm=&sortfield=hqzdf&sorttype=asc&xxfcbj=&keyword=&_=1523373009190'
     url_cje = 'http://www.neeq.com.cn/nqhqController/nqhq.do?callback=jQuery18304718930715294276_1523372978803&page=0&type=Z&zqdm=&sortfield=hqcjje&sorttype=desc&xxfcbj=&keyword=&_=1523373027130'
-    html_zhang = request.urlopen(url_zhang).read()
-    html_die = request.urlopen(url_die).read()
-    html_cje = request.urlopen(url_cje).read()
-    zhang = html_zhang.decode('utf-8','ignore')
-    die = html_die.decode('utf-8','ignore')
-    cje = html_cje.decode('utf-8','ignore')
+    zhang = requests.get(url_zhang).text
+    die = requests.get(url_die).text
+    cje = requests.get(url_cje).text
     time_end=time.time()
     print('get stock data cost:',time_end - time_start,'s')
     return zhang, die, cje
@@ -50,8 +43,7 @@ def getxyzrdata(): # xyzr = getxyzrdata()
     xyzr = []
     while(1):
         url_xyzr = url_xyzr_1 + str(i) + url_xyzr_2
-        html_xyzr = request.urlopen(url_xyzr).read()
-        page = html_xyzr.decode('utf-8','ignore')
+        page = requests.get(url_xyzr).text
         xyzr.append(page)
         xyzr_confirm = page[-126:] # confirm "lastPage":true
         flag = re.compile(r'"lastPage":true').findall(xyzr_confirm)

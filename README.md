@@ -13,4 +13,7 @@ code分三步走:
 主要是用json模块的json.loads()函数将字符串化为json数据,然后提取需要数据.
 
 ## save to excel
-路线为pandas模块的pd.ExcelWriter()函数,将DataFrame型数据用to_excel()函数写入sheet.
+路线为pandas模块的pd.ExcelWriter()函数,将DataFrame型数据用to_excel()函数写入sheet
+
+---
+2018/4/26 改用requests模块的get()方法
