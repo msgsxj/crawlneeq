@@ -15,5 +15,5 @@ code分三步走:
 ## save to excel
 路线为pandas模块的pd.ExcelWriter()函数,将DataFrame型数据用to_excel()函数写入sheet
 
----
-2018/4/26 改用requests模块的get()方法
+# 修改
+ - 2018/4/26 改用requests模块的get()方法
